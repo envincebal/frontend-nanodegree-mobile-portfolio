@@ -16,8 +16,9 @@ Click [here](https://envincebal.github.io/web-optimization/) to view page.
 
 ####Part 2: Optimize Frames per Second in pizza.html
 
+- Changed "querySelector" to "getElementById" on lines 405, 408 and 411.
+- Changed "querySelectorAll" to "getElementByClassName" on line 433.
 - Removed determineDx function on line 420.
 - Stored (document.body.scrollTop / 1250) into a variable outside of loop so it only runs once on line 486.
-- Reduced the columns of pizzas from 8 to 6 on line 508.
 - Moved "movingPizzas1" into a variable outside of for loop and changed from querySelector to getElementById so it's called only once on line 513.
 - Reduced from 200 to 25 pizzas to remove unnecessary pizzas not seen on screen on line 516.
