@@ -402,13 +402,13 @@ var resizePizzas = function(size) {
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.getElementById("pizzaSize").innerHTML = "Small";
+        document.querySelector("#pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.getElementById("pizzaSize").innerHTML = "Medium";
+        document.querySelector("#pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.getElementById("pizzaSize").innerHTML = "Large";
+        document.querySelector("#pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -417,18 +417,16 @@ var resizePizzas = function(size) {
 
   changeSliderLabel(size);
 
+  // Removed determineDx function
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
     switch(size) {
       case "1":
-        newwidth = 25;
-        break;
+        return 0.25;
       case "2":
-        newwidth = 33.3;
-        break;
+        return 0.3333;
       case "3":
-        newwidth = 50;
-        break;
+        return 0.5;
       default:
         console.log("bug in sizeSwitcher");
     }
@@ -483,8 +481,9 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   var items = document.querySelectorAll('.mover');
+  var scrolling = (document.body.scrollTop / 1250);
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    var phase = Math.sin(scrolling + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
@@ -503,9 +502,16 @@ window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
-  var cols = 8;
+  // Reduced the columns of pizzas from 8 to 6.
+  var cols = 6;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  // Moved "movingPizzas1" into a variable outside of for loop and
+  // changed from querySelector to getElementById so it's called only
+  // once.
+  var pizzaOne = document.getElementById("movingPizzas1");
+  // Reduced from 200 to 25 pizzas to remove unnecessary pizzas not
+  // seen on screen.
+  for (var i = 0; i < 25; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -513,7 +519,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    pizzaOne.appendChild(elem);
   }
   updatePositions();
 });
